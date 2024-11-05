@@ -1,0 +1,37 @@
+name: 'quevee'
+description: 'QUality-EVEnt Engine for collecting quality-related build and release artifacts'
+branding:
+  icon: 'award'
+  color: 'green'
+inputs:
+  release_url:
+    description: 'URL of the release this manifest refers to'
+    required: false
+  artifacts_documentation:
+    description: 'Comma-separated list of URLs of documentation artifacts'
+    required: false
+  artifacts_license:
+    description: 'Comma-separated list of URLs containing licensing information'
+    required: false
+  artifacts_readme:
+    description: 'Comma-separated list of URLs of readme files'
+    required: false
+  artifacts_requirements:
+    description: 'Comma-separated list of URLs of requirement files'
+    required: false
+  artifacts_testing:
+    description: 'Comma-separated list of URLs of test results'
+    required: false
+outputs:
+  manifest_file:
+    description: 'Process artifacts manifest file name'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.release_url }}
+    - ${{ inputs.artifacts_documentation }}
+    - ${{ inputs.artifacts_license }}
+    - ${{ inputs.artifacts_readme }}
+    - ${{ inputs.artifacts_requirements }}
+    - ${{ inputs.artifacts_testing }}

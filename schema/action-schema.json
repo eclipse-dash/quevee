@@ -1,0 +1,123 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://github.com/AnotherDaniel/quevee/action/v1",
+    "description": "Schema for the quevee action file",
+    "definitions": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "description" : {
+                    "type": "string",
+                    "pattern": "^(https?://[^,]+)(,https?://[^,]+)*$",
+                    "description": "Comma separated list of the urls"
+                },
+                "required": {
+                    "type": "boolean"
+                }
+            },
+            "required": ["description", "required"],
+            "additionalProperties": false
+        }
+    },
+    "properties": {
+        "name" : {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 3,
+            "description": "Project name, must be the same as a Eclipse project"
+        },
+        "description": {
+            "type": "string",
+            "maxLength": 512,
+            "description": "Project description to be shown on badge"
+        },
+        "branding": {
+            "type": "object",
+            "properties": {
+                "icon": {
+                    "type": "string",
+                    "enum": ["award"],
+                    "description": "Badge type"
+                },
+                "color": {
+                    "type": "string",
+                    "enum": ["red", "yellow", "green"],
+                    "description": "Badge color"
+                }
+            },
+            "additionalProperties": false,
+            "description": "Specifies the badge branding properties"
+        },
+        "inputs": {
+            "type": "object",
+            "patternProperties": {
+                "^artifacts_(documentation|license|readme|requirements|testing)$": {
+                    "$ref": "#/definitions/input"
+                }
+            },
+            "properties": {
+                "release_url": {
+                    "properties": {
+                        "description" : {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "URL of the release"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": ["description", "required"],
+                    "additionalProperties": false
+                }
+            },
+            "required": ["release_url", "artifacts_documentation", "artifacts_license", "artifacts_readme", "artifacts_requirements", "artifacts_testing"],
+            "additionalProperties": false
+        },
+        "outputs": {
+            "type": "object",
+            "properties": {
+                "manifest_file": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Manifest filename to be generated"
+                        }
+                    },
+                    "required": ["description"],
+                    "additionalProperties": false
+                }
+            },
+            "required": ["manifest_file"],
+            "additionalProperties": false
+        },
+        "runs": {
+            "type": "object",
+            "properties": {
+                "using": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+                },
+                "image": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 1
+            },
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "minLength": 1
+                    }
+                }
+            },
+            "required": ["using", "image", "args"],
+            "additionalProperties": false
+        }
+    },
+    "required": ["name", "description", "branding", "inputs", "outputs", "runs"],
+    "additionalProperties": false
+}
