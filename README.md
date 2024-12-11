@@ -56,7 +56,7 @@ Conceptually, this is how quevee is used:
 
 ```yaml
 - name: Collect quality artifacts
-  uses: anotherdaniel/quevee@v0.1
+  uses: eclipse-dash/quevee@v0.4
   with:
     artifacts_readme: <readme-url>
     artifacts_requirements: <req-url1>,<req-url2>
@@ -117,12 +117,12 @@ jobs:
 
       # Collection quality artifacts
       - name: Collect quality artifacts
-        uses: anotherdaniel/quevee@v0.1
+        uses: eclipse-dash/quevee@v0.4
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
           artifacts_readme: ${{ steps.upload_readme.outputs.browser_download_url }}
-          artifacts_requirements: ${{ steps.upload_license.outputs.browser_download_url }},https://yet.another.org/example/artifact.bz2
+          artifacts_requirements: ${{ steps.upload_license.outputs.browser_download_url }},https://my.org/example/artifact.bz2
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
         id: upload_manifest
@@ -142,21 +142,21 @@ This invocation will generate the following manifest structure (test run on the 
 
 ```toml
 [metadata]
-repo-url = "https://github.com/AnotherDaniel/quevee"
+repo-url = "https://github.com/eclipse-dash/quevee"
 created = "Sat Mar  9 18:20:29 UTC 2024"
 by-action = "quevee"
-project = "AnotherDaniel"
+project = "eclipse-dash"
 repository = "quevee"
 ref-tag = "v0.1.20"
 git-hash = "22a0af5f8acb723801c85d5a8871019f5ff6f7ec"
-release-url = "https://github.com/AnotherDaniel/quevee/releases/tag/v0.1.20"
+release-url = "https://github.com/eclipse-dash/quevee/releases/tag/v0.1.20"
 
 requirements = [
-    "https://github.com/AnotherDaniel/quevee/releases/download/v0.1.20/LICENSE",
-    "https://yet.another.org/example/artifact.bz2",
+    "https://github.com/eclipse-dash/quevee/releases/download/v0.1.20/LICENSE",
+    "https://my.org/example/artifact.bz2",
 ]
 
 readme = [
-    "https://github.com/AnotherDaniel/quevee/releases/download/v0.1.20/README.md",
+    "https://github.com/eclipse-dash/quevee/releases/download/v0.1.20/README.md",
 ]    
 ```
