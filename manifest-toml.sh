@@ -72,7 +72,7 @@ validate_url() {
 
 ### Main script section
 
-OUTPUT="manifest.toml"
+OUTPUT="sdv-manifest.toml"
 
 # Write header section
 generate_toml_header >>"$OUTPUT"
