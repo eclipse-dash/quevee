@@ -160,3 +160,7 @@ readme = [
     "https://github.com/eclipse-dash/quevee/releases/download/v0.1.20/README.md",
 ]    
 ```
+
+## Development & Testing
+
+In the `./tools` folder you'll find test runner scripts that you can use to try and test the quevee actions locally, for development and experimentation. You will have to set the appropriate environment variables with the content you need for testing, e.g. `INPUT_ARTIFACTS_README` needs to contain URL(s) that should be passed to the quevee script as the content of `artifacts_readme`.

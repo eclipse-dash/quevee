@@ -13,7 +13,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Container image that runs your code
-FROM alpine:3.10
+FROM alpine:3.21
 
 # sh scripting is too painful
 RUN apk add --no-cache bash

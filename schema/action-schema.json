@@ -1,30 +1,32 @@
 {
     "$schema": "https://json-schema.org/draft-07/schema",
-    "$id": "https://github.com/AnotherDaniel/quevee/action/v1",
+    "$id": "https://github.com/AnotherDaniel/quevee-1/action/v1",
     "description": "Schema for the quevee action file",
     "definitions": {
         "input": {
             "type": "object",
             "properties": {
-                "description" : {
+                "description": {
                     "type": "string",
-                    "pattern": "^(https?://[^,]+)(,https?://[^,]+)*$",
-                    "description": "Comma separated list of the urls"
+                    "description": "Description of the input"
                 },
                 "required": {
                     "type": "boolean"
                 }
             },
-            "required": ["description", "required"],
+            "required": [
+                "description",
+                "required"
+            ],
             "additionalProperties": false
         }
     },
     "properties": {
-        "name" : {
+        "name": {
             "type": "string",
             "maxLength": 64,
             "minLength": 3,
-            "description": "Project name, must be the same as a Eclipse project"
+            "description": "Project name, must be the same as an Eclipse project"
         },
         "description": {
             "type": "string",
@@ -36,12 +38,18 @@
             "properties": {
                 "icon": {
                     "type": "string",
-                    "enum": ["award"],
+                    "enum": [
+                        "award"
+                    ],
                     "description": "Badge type"
                 },
                 "color": {
                     "type": "string",
-                    "enum": ["red", "yellow", "green"],
+                    "enum": [
+                        "red",
+                        "yellow",
+                        "green"
+                    ],
                     "description": "Badge color"
                 }
             },
@@ -50,28 +58,182 @@
         },
         "inputs": {
             "type": "object",
-            "patternProperties": {
-                "^artifacts_(documentation|license|readme|requirements|testing)$": {
-                    "$ref": "#/definitions/input"
-                }
-            },
             "properties": {
                 "release_url": {
+                    "type": "object",
                     "properties": {
-                        "description" : {
+                        "description": {
                             "type": "string",
                             "format": "uri",
-                            "description": "URL of the release"
+                            "description": "URL of the release this manifest refers to"
                         },
                         "required": {
                             "type": "boolean"
                         }
                     },
-                    "required": ["description", "required"],
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "artifacts_documentation": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Multi-line list of documentation artifacts, each line must be in the form <url>|<name>|<description>|<tags>"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "artifacts_license": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Multi-line list of licensing artifacts, each line must be in the form <url>|<name>|<description>|<tags>"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "artifacts_readme": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Multi-line list of readme artifacts, each line must be in the form <url>|<name>|<description>|<tags>"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "artifacts_requirements": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Multi-line list of requirements artifacts, each line must be in the form <url>|<name>|<description>|<tags>"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "artifacts_testing": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Multi-line list of testing artifacts, each line must be in the form <url>|<name>|<description>|<tags>"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "purl_type": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "When using the extended output format, this provides the package URL (PURL) type; e.g., 'cargo' for a Rust component"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "extended_output": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "Generate more detailed and structured manifest file (json format)"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "output_json": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "File name of json manifest output"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
+                    "additionalProperties": false
+                },
+                "output_toml": {
+                    "type": "object",
+                    "properties": {
+                        "description": {
+                            "type": "string",
+                            "description": "File name of toml manifest output"
+                        },
+                        "required": {
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "required"
+                    ],
                     "additionalProperties": false
                 }
             },
-            "required": ["release_url", "artifacts_documentation", "artifacts_license", "artifacts_readme", "artifacts_requirements", "artifacts_testing"],
+            "required": [
+                "release_url"
+            ],
             "additionalProperties": false
         },
         "outputs": {
@@ -82,14 +244,18 @@
                     "properties": {
                         "description": {
                             "type": "string",
-                            "description": "Manifest filename to be generated"
+                            "description": "Process artifacts manifest file name"
                         }
                     },
-                    "required": ["description"],
+                    "required": [
+                        "description"
+                    ],
                     "additionalProperties": false
                 }
             },
-            "required": ["manifest_file"],
+            "required": [
+                "manifest_file"
+            ],
             "additionalProperties": false
         },
         "runs": {
@@ -104,7 +270,7 @@
                     "type": "string",
                     "maxLength": 255,
                     "minLength": 1
-            },
+                },
                 "args": {
                     "type": "array",
                     "items": {
@@ -114,10 +280,21 @@
                     }
                 }
             },
-            "required": ["using", "image", "args"],
+            "required": [
+                "using",
+                "image",
+                "args"
+            ],
             "additionalProperties": false
         }
     },
-    "required": ["name", "description", "branding", "inputs", "outputs", "runs"],
+    "required": [
+        "name",
+        "description",
+        "branding",
+        "inputs",
+        "outputs",
+        "runs"
+    ],
     "additionalProperties": false
 }

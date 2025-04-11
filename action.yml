@@ -19,21 +19,33 @@ branding:
 inputs:
   release_url:
     description: 'URL of the release this manifest refers to'
-    required: false
+    required: true
   artifacts_documentation:
-    description: 'Comma-separated list of URLs of documentation artifacts'
+    description: 'Multi-line list of documentation artifacts, each line must be in the form <url>|<name>|<description>|<tags>)'
     required: false
   artifacts_license:
-    description: 'Comma-separated list of URLs containing licensing information'
+    description: 'Comma-separated list of URLs containing licensing information, each line must be in the form <url>|<name>|<description>|<tags>)'
     required: false
   artifacts_readme:
-    description: 'Comma-separated list of URLs of readme files'
+    description: 'Comma-separated list of URLs of readme files, each line must be in the form <url>|<name>|<description>|<tags>)'
     required: false
   artifacts_requirements:
-    description: 'Comma-separated list of URLs of requirement files'
+    description: 'Comma-separated list of URLs of requirement files, each line must be in the form <url>|<name>|<description>|<tags>)'
     required: false
   artifacts_testing:
-    description: 'Comma-separated list of URLs of test results'
+    description: 'Comma-separated list of URLs of test results, each line must be in the form <url>|<name>|<description>|<tags>)'
+    required: false
+  purl_type:
+    description: 'When using the extended output format, this provides the package URL (PURL) type; e.g. "cargo" for a Rust component'
+    required: false
+  extended_output: 
+    description: 'Generate more detailed and structured manifest file (json format)'
+    required: false
+  output_json:
+    description: 'File name of json manifest output'
+    required: false
+  output_toml:
+    description: 'File name of toml manifest output'
     required: false
 outputs:
   manifest_file:
@@ -48,3 +60,7 @@ runs:
     - ${{ inputs.artifacts_readme }}
     - ${{ inputs.artifacts_requirements }}
     - ${{ inputs.artifacts_testing }}
+    - ${{ inputs.purl_type }}
+    - ${{ inputs.extended_output }}
+    - ${{ inputs.output_json }}
+    - ${{ inputs.output_toml }}
