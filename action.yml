@@ -1,16 +1,11 @@
-# Copyright (C) 2024 ETAS 
+# Copyright (C) 2024 ETAS and other Eclipse Foundation contributors
 # 
-# This program and the accompanying materials are made available under the
-# terms of the Apache License, Version 2.0 which is available at
-# https://www.apache.org/licenses/LICENSE-2.0.
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
-# 
-# SPDX-License-Identifier: Apache-2.0
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
 name: 'quevee'
 description: 'QUality-EVEnt Engine for collecting quality-related build and release artifacts'
 branding:
@@ -23,17 +18,17 @@ inputs:
   artifacts_documentation:
     description: 'Comma-separated list of URLs of documentation artifacts'
     required: false
-  artifacts_license:
-    description: 'Comma-separated list of URLs containing licensing information'
-    required: false
-  artifacts_readme:
-    description: 'Comma-separated list of URLs of readme files'
-    required: false
   artifacts_requirements:
     description: 'Comma-separated list of URLs of requirement files'
     required: false
   artifacts_testing:
     description: 'Comma-separated list of URLs of test results'
+    required: false
+  artifacts_coding_guidelines:
+    description: 'Comma-separated list of URLs of coding guidelines documents'
+    required: false
+  artifacts_release_process:
+    description: 'Comma-separated list of URLs of release process information'
     required: false
 outputs:
   manifest_file:
@@ -44,7 +39,7 @@ runs:
   args:
     - ${{ inputs.release_url }}
     - ${{ inputs.artifacts_documentation }}
-    - ${{ inputs.artifacts_license }}
-    - ${{ inputs.artifacts_readme }}
     - ${{ inputs.artifacts_requirements }}
     - ${{ inputs.artifacts_testing }}
+    - ${{ inputs.artifacts_coding_guidelines }}
+    - ${{ inputs.artifacts_release_process }}

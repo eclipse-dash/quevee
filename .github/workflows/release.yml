@@ -1,4 +1,4 @@
-#on: [push]
+
 on:
   push:
     tags:
@@ -20,34 +20,23 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         id: create_release
+
       - name: Show release URL
         run: |
           echo ${{ steps.create_release.outputs.url }}
 
-      # Upload artifacts to release
-      - name: Upload README to release
-        uses: svenstaro/upload-release-action@v2
-        id: upload_readme
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: README.md
-          tag: ${{ github.ref }}
-      - name: Upload LICENSE to release
-        uses: svenstaro/upload-release-action@v2
-        id: upload_license
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: LICENSE
-          tag: ${{ github.ref }}
-
       # Do the quality artifact collection thing
       - name: Collect quality artifacts
-        uses: ./ # Uses an action in the root directory
+        uses: eclipse-dash/quevee
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
-          artifacts_readme: ${{ steps.upload_readme.outputs.browser_download_url }}
-          artifacts_requirements: ${{ steps.upload_license.outputs.browser_download_url }},https://yet.another.org/example/artifact.bz2
+          artefacts_requirements: docs/requirements.md
+	  artefacts_testing: tests/
+	  artefacts_documentation: docs/getting_started/
+	  artefacts_coding_guidelines: docs/coding_guidelines.md
+	  artefacts_release_process: https://example.org/my_release_process/
+	  
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
         id: upload_manifest
@@ -55,9 +44,3 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.quevee.outputs.manifest_file }}
           tag: ${{ github.ref }}
-      - name: Store quality manifest as workflow artifact
-        uses: actions/upload-artifact@v4
-        id: store_manifest
-        with:
-          name: quality-artifacts-manifest
-          path: ${{ steps.quevee.outputs.manifest_file }}
