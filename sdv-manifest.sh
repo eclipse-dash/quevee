@@ -74,7 +74,7 @@ get_url_from_filename() {
     if [[ $filename =~ $regex ]]; then
         echo "$filename"
     else
-	echo "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/${GITHUB_WORKFLOW_SHA}/${filename}"
+	echo "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_WORKFLOW_SHA}/${filename}"
     fi
 }
 

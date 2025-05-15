@@ -19,21 +19,19 @@ jobs:
       - name: Show release URL
         run: |
           echo ${{ steps.create_release.outputs.url }}
-      # Do the quality artefact collection thing
+      # Call the quevee gh action to create the manifest file for SDV maturity assessment.
       - name: Collect quality artefacts
         uses: eclipse-dash/quevee
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
           artefacts_requirements: docs/requirements.md
-          artefacts_testing: tests/
-          artefacts_documentation: docs/getting_started/
+          artefacts_testing: tests/test_report.md
+          artefacts_documentation: docs/getting_started/README.md
           artefacts_coding_guidelines: docs/coding_guidelines.md
-          artefacts_release_process: https://example.org/my_release_process/
-          
+          artefacts_release_process: https://example.org/docs/my_release_process.md
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
-        id: upload_manifest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.quevee.outputs.manifest_file }}
