@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
     
 jobs:
-  quality_artifacts_job:
-    name: A job to collect quality artifacts
+  quality_artefacts_job:
+    name: A job to collect quality artefacts
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -25,8 +25,8 @@ jobs:
         run: |
           echo ${{ steps.create_release.outputs.url }}
 
-      # Do the quality artifact collection thing
-      - name: Collect quality artifacts
+      # Do the quality artefact collection thing
+      - name: Collect quality artefacts
         uses: eclipse-dash/quevee
         id: quevee
         with:
