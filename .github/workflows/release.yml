@@ -1,13 +1,10 @@
-
 on:
   push:
     tags:
       - v*
-
 concurrency:
   group: "release-${{ github.head_ref || github.ref }}"
   cancel-in-progress: true
-    
 jobs:
   quality_artefacts_job:
     name: A job to collect quality artefacts
@@ -16,15 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
       - name: Create release
         uses: softprops/action-gh-release@v2
         id: create_release
-
       - name: Show release URL
         run: |
           echo ${{ steps.create_release.outputs.url }}
-
       # Do the quality artefact collection thing
       - name: Collect quality artefacts
         uses: eclipse-dash/quevee
@@ -32,11 +26,11 @@ jobs:
         with:
           release_url: ${{ steps.create_release.outputs.url }}
           artefacts_requirements: docs/requirements.md
-	  artefacts_testing: tests/
-	  artefacts_documentation: docs/getting_started/
-	  artefacts_coding_guidelines: docs/coding_guidelines.md
-	  artefacts_release_process: https://example.org/my_release_process/
-	  
+          artefacts_testing: tests/
+          artefacts_documentation: docs/getting_started/
+          artefacts_coding_guidelines: docs/coding_guidelines.md
+          artefacts_release_process: https://example.org/my_release_process/
+          
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
         id: upload_manifest
