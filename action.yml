@@ -15,14 +15,14 @@ inputs:
   release_url:
     description: 'URL of the release this manifest refers to'
     required: false
-  artefacts_documentation:
-    description: 'Comma-separated list of URLs of documentation artefacts'
-    required: false
   artefacts_requirements:
     description: 'Comma-separated list of URLs of requirement files'
     required: false
   artefacts_testing:
     description: 'Comma-separated list of URLs of test results'
+    required: false
+  artefacts_documentation:
+    description: 'Comma-separated list of URLs of documentation artefacts'
     required: false
   artefacts_coding_guidelines:
     description: 'Comma-separated list of URLs of coding guidelines documents'
@@ -38,8 +38,8 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.release_url }}
-    - ${{ inputs.artefacts_documentation }}
     - ${{ inputs.artefacts_requirements }}
     - ${{ inputs.artefacts_testing }}
+    - ${{ inputs.artefacts_documentation }}
     - ${{ inputs.artefacts_coding_guidelines }}
     - ${{ inputs.artefacts_release_process }}
