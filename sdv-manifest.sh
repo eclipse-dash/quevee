@@ -44,7 +44,8 @@ generate_toml_section() {
     if [ ${#array[@]} -gt 0 ]; then
         for element in "${array[@]}"; do
             validate_url $element
-            temp_output+=$'\n'"    \"$element\","
+	    url=$( get_url_from_filename $element )
+            temp_output+=$'\n'"    \"$url\","
         done
 
         cat <<EOF
@@ -62,6 +63,18 @@ validate_url() {
 
     if [[ ! $url =~ $regex ]]; then
         echo "Invalid URL: $url" >&2
+    fi
+}
+
+# Build external URL from file name
+get_url_from_filename() {
+    local filename=$1
+    local regex="^http.*$"
+
+    if [[ $filename =~ $regex ]]; then
+        echo "$filename"
+    else
+	echo "${GITHUB_REPOSITORY}/${GITHUB_WORKFLOW_SHA}/${filename}"
     fi
 }
 
