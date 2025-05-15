@@ -1,155 +1,72 @@
-<!--
- * Copyright (C) 2024 ETAS and others
- * 
- * This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License 2.0
- * which is available at https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
--->
+
 # QUality EVEnt Engine (quevee) github action
 
-This action accepts a set of input URLs pointing to release artifacts of various categories (like 'documentation' or 'testing'), and creates a toml file that contains project and release metadata as well as the artifact URLs. The goal is to document release artifacts that are relevant for assessment of project quality aspects, and present them for evaluation and archival in quality assessment processes.
+This action creates a `sdv-manifest.toml` file as a release asset, containing information required for the [SDV Maturity assessment](https://gitlab.eclipse.org/eclipse-wg/sdv-wg/sdv-technical-alignment/sdv-technical-topics/sdv-process/sdv-process-evaluation/-/blob/main/README.md) program. It takes as inputs a set of documents provided by the project, and formats it in a way that Eclipse SDV automation scripts can use to compute the level of maturity of the project according to the criteria defined in the program.
 
-## Inputs
 
-### `release_url`
+## Usage
 
-URL of the release this manifest refers to.
-
-### `artifacts_documentation`
-
-Comma-separated list of URLs of documentation artifacts.
-
-### `artifacts_licensing`
-
-Comma-separated list of URLs of licensing information.
-
-### `artifacts_readme`
-
-Comma-separated list of URLs of readme files.
-
-### `artifacts_requirements`
-
-Comma-separated list of URLs of requirement files.
-
-### `artifacts_testing`
-
-Comma-separated list of URLs of test results.
-
-## Outputs
-
-### `manifest_file`
-
-Process artifacts manifest file name.
-
-## Simple example
-
-Conceptually, this is how quevee is used:
+To use this action, one simply needs to add the following steps in their release action workflow:
 
 ```yaml
-- name: Collect quality artifacts
-  uses: eclipse-dash/quevee@v0.4
-  with:
-    artifacts_readme: <readme-url>
-    artifacts_requirements: <req-url1>,<req-url2>
-```
-
-This invocation will generate the following manifest structure:
-
-```toml
-[metadata]
-<repository and release-specific information>
-
-readme = [
-    "readme-url",
-]
-
-requirements = [
-    "req-url1", 
-    "req-url2",
-]
-```
-
-## Realistic example
-
-A more complete example, applied to the quevee repository:
-
-```yaml
-jobs:
-  quality_artifacts_job:
-    name: A job to collect quality artifacts
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Create release
-        uses: softprops/action-gh-release@v2
-        id: create_release
-      - name: Show release URL
-        run: |
-          echo ${{ steps.create_release.outputs.url }}
-
-      # Upload artifacts to release
-      - name: Upload README to release
-        uses: svenstaro/upload-release-action@v2
-        id: upload_readme
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: README.md
-          tag: ${{ github.ref }}
-      - name: Upload LICENSE to release
-        uses: svenstaro/upload-release-action@v2
-        id: upload_license
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: LICENSE
-          tag: ${{ github.ref }}
-
-      # Collection quality artifacts
-      - name: Collect quality artifacts
-        uses: eclipse-dash/quevee@v0.4
+      # Call the quevee gh action to create the manifest file for SDV maturity assessment.
+      - name: Collect quality artefacts
+        uses: eclipse-dash/quevee
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
-          artifacts_readme: ${{ steps.upload_readme.outputs.browser_download_url }}
-          artifacts_requirements: ${{ steps.upload_license.outputs.browser_download_url }},https://my.org/example/artifact.bz2
+          artefacts_requirements: <path/to/requirements_file>
+          artefacts_testing: <path/to/testing_document>
+          artefacts_documentation: <path/to/documentation>
+          artefacts_coding_guidelines: <path/to/coding_guidelines>
+          artefacts_release_process: <path/to/release_process>
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
-        id: upload_manifest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.quevee.outputs.manifest_file }}
           tag: ${{ github.ref }}
-      - name: Store quality manifest as workflow artifact
-        uses: actions/upload-artifact@v4
-        id: store_manifest
-        with:
-          name: quality-artifacts-manifest
-          path: ${{ steps.quevee.outputs.manifest_file }}
-````
 
-This invocation will generate the following manifest structure (test run on the quevee repository):
+```
+
+The various <path/to/file> placeholders can either be:
+* a path to the file within the repository, e.g. `docs/getting_started.md`, or
+* a full URL to a resource, e.g. `https://myproject/docs/getting_started.pdf`.
+
+A more complete example can be found in the GitHub workflow of this repository: [.github/workflow/release.yml](.github/workflow/release.yml).
+
+## Output
+
+The action creates a file called `sdv-manifest.toml` as an asset of the release. Its content is as follows:
 
 ```toml
-[metadata]
-repo-url = "https://github.com/eclipse-dash/quevee"
-created = "Sat Mar  9 18:20:29 UTC 2024"
+repo-url = "https://github.com/borisbaldassari/quevee-test"
+created = "Thu May 15 16:06:27 UTC 2025"
 by-action = "quevee"
-project = "eclipse-dash"
-repository = "quevee"
-ref-tag = "v0.1.20"
-git-hash = "22a0af5f8acb723801c85d5a8871019f5ff6f7ec"
-release-url = "https://github.com/eclipse-dash/quevee/releases/tag/v0.1.20"
+project = "borisbaldassari"
+repository = "quevee-test"
+ref-tag = "v0.0.9"
+git-hash = "4ef764b812cf55e129408bfac792e16d8b5754b3"
+release-url = "https://github.com/borisbaldassari/quevee-test/releases/tag/v0.0.9"
 
 requirements = [
-    "https://github.com/eclipse-dash/quevee/releases/download/v0.1.20/LICENSE",
-    "https://my.org/example/artifact.bz2",
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/requirements.md",
 ]
 
-readme = [
-    "https://github.com/eclipse-dash/quevee/releases/download/v0.1.20/README.md",
-]    
+coding_guidelines = [
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/coding_guidelines.md",
+]
+
+documentation = [
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/getting_started/",
+]
+
+release_process = [
+    "https://example.org/my_release_process/",
+    ]
+
+testing = [
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/tests/",
+    ]
 ```
+
