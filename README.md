@@ -33,7 +33,7 @@ The various <path/to/file> placeholders can either be:
 * a path to the file within the repository, e.g. `docs/getting_started.md`, or
 * a full URL to a resource, e.g. `https://myproject/docs/getting_started.pdf`.
 
-A more complete example can be found in the GitHub workflow of this repository: [.github/workflow/release.yml](.github/workflow/release.yml).
+A more complete example can be found in the GitHub workflow of this repository: [.github/workflows/release.yml](.github/workflows/release.yml).
 
 ## Output
 
