@@ -1,18 +1,14 @@
 #!/bin/bash
 
-# Copyright (C) 2024 ETAS 
-# 
+# ********************************************************************************
+#  Copyright (c) 2025 ETAS and others
+#
 # This program and the accompanying materials are made available under the
-# terms of the Apache License, Version 2.0 which is available at
-# https://www.apache.org/licenses/LICENSE-2.0.
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
-# 
-# SPDX-License-Identifier: Apache-2.0
+# terms of the Eclipse Public License 2.0 which is available at
+# https://www.eclipse.org/legal/epl-2.0.
+#
+#
+# SPDX-License-Identifier: EPL-2.0
 
 time=$(date)
 owner=$(echo "$GITHUB_REPOSITORY" | cut -d '/' -f 1)
@@ -25,7 +21,6 @@ fi
 
 generate_toml_header() {
     cat <<EOF
-[metadata]
 repo-url = "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
 created = "$time"
 by-action = "$GITHUB_ACTION"
@@ -38,7 +33,7 @@ release-url = "$release_url"
 EOF
 }
 
-# Generate artifact-list toml section
+# Generate list of toml sections
 generate_toml_section() {
     local section="$1"
     local entries="$2"
@@ -77,28 +72,28 @@ OUTPUT="sdv-manifest.toml"
 # Write header section
 generate_toml_header >>"$OUTPUT"
 
-# Write artifact sections
+# Write sections
 for var in $(env | grep "^INPUT_" | cut -d= -f1); do
     value="${!var}"
 
     case "$var" in
-    "INPUT_ARTIFACTS_DOCUMENTATION")
-        generate_toml_section "documentation" "$value" >>"$OUTPUT"
-        ;;
-    "INPUT_ARTIFACTS_LICENSE")
-        generate_toml_section "licensing" "$value" >>"$OUTPUT"
-        ;;
-    "INPUT_ARTIFACTS_README")
-        generate_toml_section "readme" "$value" >>"$OUTPUT"
-        ;;
-    "INPUT_ARTIFACTS_REQUIREMENTS")
+    "INPUT_ARTEFACTS_REQUIREMENTS")
         generate_toml_section "requirements" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTIFACTS_TESTING")
+    "INPUT_ARTEFACTS_TESTING")
         generate_toml_section "testing" "$value" >>"$OUTPUT"
         ;;
+    "INPUT_ARTEFACTS_DOCUMENTATION")
+        generate_toml_section "documentation" "$value" >>"$OUTPUT"
+        ;;
+    "INPUT_ARTEFACTS_CODING_GUIDELINES")
+        generate_toml_section "coding_guidelines" "$value" >>"$OUTPUT"
+        ;;
+    "INPUT_ARTEFACTS_RELEASE_PROCESS")
+        generate_toml_section "release_process" "$value" >>"$OUTPUT"
+        ;;
     *)
-        echo "Unknown artifact type ${var#INPUT_ARTIFACTS_}"
+        echo "Unknown artefact type ${var#INPUT_ARTEFACTS_}"
         ;;
     esac
 done
