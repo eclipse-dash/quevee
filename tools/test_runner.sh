@@ -8,15 +8,18 @@
 #
 # SPDX-License-Identifier: EPL-2.0
 
-export GITHUB_OUTPUT="manifest.toml"
+export GITHUB_OUTPUT="sdv-manifest.toml"
 
 export GITHUB_SERVER_URL=https://github.com
 export GITHUB_REPOSITORY=eclipse-dash/quevee
 export GITHUB_REF_NAME=main
 export GITHUB_WORKFLOW_SHA=e69b6ff8f67e0d2edfd0968ebc5f99d7e8d763c7
 
-export INPUT_ARTIFACTS_README="https://some.example.url,https://other.example.url"
-export INPUT_ARTIFACTS_REQUIREMENTS="./Another/URL,https://another.org/example/artifact.bz2"
-export INPUT_ARTIFACTS_DOCUMENTATION="http://first.doc.com/doc/url,https://another.doc.com/example/docs.zip"
+export INPUT_ARTEFACTS_README="https://some.example.url,https://other.example.url"
+export INPUT_ARTEFACTS_REQUIREMENTS="another/file.md,https://another.org/example-test/artefact.bz2"
+export INPUT_ARTEFACTS_TESTING="http://first.doc.com/doc/url,https://another.doc.com/example/docs.zip"
+export INPUT_ARTEFACTS_DOCUMENTATION="./Random/URL,https://another.org/example/artefact.bz2"
+export INPUT_ARTEFACTS_CODING_GUIDELINES="./SomeOther/URL,https://another.org/example/artefact.bz2"
+export INPUT_ARTEFACTS_RELEASE_PROCESS="./YetAnother/URL,https://another.org/example/artefact.bz2"
 
-./manifest-toml.sh
+./sdv-manifest.sh

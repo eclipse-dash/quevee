@@ -43,8 +43,8 @@ generate_toml_section() {
 
     if [ ${#array[@]} -gt 0 ]; then
         for element in "${array[@]}"; do
-            validate_url $element
 	    url=$( get_url_from_filename $element )
+            validate_url $url
             temp_output+=$'\n'"    \"$url\","
         done
 
@@ -59,10 +59,10 @@ EOF
 # Validate URL using regex
 validate_url() {
     local url="$1"
-    local regex="^(http|https)://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(:[0-9]+)?(/[a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~]*)?$"
+    local regex="^(http|https)://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(/[-a-zA-Z0-9\._\?\,\'/\\\+&amp;%\$#\=~]*)?$"
 
     if [[ ! $url =~ $regex ]]; then
-        echo "Invalid URL: $url" >&2
+        echo "Invalid URL: [$url]" >&2
     fi
 }
 
@@ -83,7 +83,7 @@ get_url_from_filename() {
 OUTPUT="sdv-manifest.toml"
 
 # Write header section
-generate_toml_header >>"$OUTPUT"
+generate_toml_header >"$OUTPUT"
 
 # Write sections
 for var in $(env | grep "^INPUT_" | cut -d= -f1); do
