@@ -16,7 +16,7 @@ To use this action, one simply needs to add the following steps in their release
         with:
           release_url: ${{ steps.create_release.outputs.url }}
           artefacts_requirements: <path/to/requirements_file>
-          artefacts_testing: <path/to/testing_document>
+          artefacts_testing: <path/to/testing_document_1>,<path/to/testing_document_2> 
           artefacts_documentation: <path/to/documentation>
           artefacts_coding_guidelines: <path/to/coding_guidelines>
           artefacts_release_process: <path/to/release_process>
@@ -33,6 +33,32 @@ The various <path/to/file> placeholders can either be:
 * a path to the file within the repository, e.g. `docs/getting_started.md`, or
 * a full URL to a resource, e.g. `https://myproject/docs/getting_started.pdf`.
 
+If one needs to provide several files for a given criterion, there are two options:
+* provide a comma-separated list of files, as shown for the artefacts_testing example above, or
+* provide an archive, with a separate github action step.
+
+An example of a step archiving artefacts can be:
+```yaml
+      - name: Gather Testing documents
+        shell: bash
+        run: |
+          tar cvz --file spec.tar.gz /path/to/dir
+      - name: Upload relevant spec files to release
+        uses: svenstaro/upload-release-action@v2
+        id: upload_spec
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: spec.tar.gz
+          tag: ${{ github.ref }}
+```
+
+This in turn can be referenced in the quevee call as:
+```yaml
+          ...
+          artifacts_testing: ${{ steps.upload_spec.outputs.browser_download_url }}
+          ...
+```
+
 A more complete example can be found in the GitHub workflow of this repository: [.github/workflows/release.yml](.github/workflows/release.yml).
 
 ## Output
@@ -45,20 +71,24 @@ created = "Thu May 15 16:06:27 UTC 2025"
 by-action = "quevee"
 project = "borisbaldassari"
 repository = "quevee-test"
-ref-tag = "v0.0.9"
-git-hash = "4ef764b812cf55e129408bfac792e16d8b5754b3"
-release-url = "https://github.com/borisbaldassari/quevee-test/releases/tag/v0.0.9"
+ref-tag = "v0.1.3"
+git-hash = "657a397af6f8e5249a519b5d63a5b8f64e763b29"
+release-url = "https://github.com/borisbaldassari/quevee-test/releases/tag/v0.1.3"
 
 requirements = [
-    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/requirements.md",
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/docs/requirements.md",
 ]
 
 coding_guidelines = [
-    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/coding_guidelines.md",
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/docs/coding_guidelines.md",
 ]
 
 documentation = [
-    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/docs/getting_started/",
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/docs/getting_started/",
+]
+
+readme = [
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/README.md",
 ]
 
 release_process = [
@@ -66,7 +96,8 @@ release_process = [
     ]
 
 testing = [
-    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/4ef764b812cf55e129408bfac792e16d8b5754b3/tests/",
-    ]
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/tests/file_1",
+    "https://raw.githubusercontent.com/borisbaldassari/quevee-test/657a397af6f8e5249a519b5d63a5b8f64e763b29/tests/file_2",
+]
 ```
 
