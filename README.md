@@ -10,16 +10,16 @@ To use this action, one simply needs to add the following steps in their release
 
 ```yaml
       # Call the quevee gh action to create the manifest file for SDV maturity assessment.
-      - name: Collect quality artefacts
+      - name: Collect quality artifacts
         uses: eclipse-dash/quevee
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
-          artefacts_requirements: <path/to/requirements_file>
-          artefacts_testing: <path/to/testing_document_1>,<path/to/testing_document_2> 
-          artefacts_documentation: <path/to/documentation>
-          artefacts_coding_guidelines: <path/to/coding_guidelines>
-          artefacts_release_process: <path/to/release_process>
+          artifacts_requirements: <path/to/requirements_file>
+          artifacts_testing: <path/to/testing_document_1>,<path/to/testing_document_2> 
+          artifacts_documentation: <path/to/documentation>
+          artifacts_coding_guidelines: <path/to/coding_guidelines>
+          artifacts_release_process: <path/to/release_process>
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -34,10 +34,10 @@ The various <path/to/file> placeholders can either be:
 * a full URL to a resource, e.g. `https://myproject/docs/getting_started.pdf`.
 
 If one needs to provide several files for a given criterion, there are two options:
-* provide a comma-separated list of files, as shown for the artefacts_testing example above, or
+* provide a comma-separated list of files, as shown for the artifacts_testing example above, or
 * provide an archive, with a separate github action step.
 
-An example of a step archiving artefacts can be:
+An example of a step archiving artifacts can be:
 ```yaml
       - name: Gather Testing documents
         shell: bash
@@ -55,7 +55,7 @@ An example of a step archiving artefacts can be:
 This in turn can be referenced in the quevee call as:
 ```yaml
           ...
-          artefacts_testing: ${{ steps.upload_spec.outputs.browser_download_url }}
+          artifacts_testing: ${{ steps.upload_spec.outputs.browser_download_url }}
           ...
 ```
 
