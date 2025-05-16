@@ -7,7 +7,7 @@
 # SPDX-License-Identifier: EPL-2.0
 #
 name: 'quevee'
-description: 'QUality-EVEnt Engine for collecting quality-related build and release artefacts'
+description: 'QUality-EVEnt Engine for collecting quality-related build and release artifacts'
 branding:
   icon: 'award'
   color: 'green'
@@ -15,35 +15,35 @@ inputs:
   release_url:
     description: 'URL of the release this manifest refers to'
     required: false
-  artefacts_readme:
+  artifacts_readme:
     description: 'Comma-separated list of URLs of READMEs'
     required: false
-  artefacts_requirements:
+  artifacts_requirements:
     description: 'Comma-separated list of URLs of requirement files'
     required: false
-  artefacts_testing:
+  artifacts_testing:
     description: 'Comma-separated list of URLs of test results'
     required: false
-  artefacts_documentation:
-    description: 'Comma-separated list of URLs of documentation artefacts'
+  artifacts_documentation:
+    description: 'Comma-separated list of URLs of documentation artifacts'
     required: false
-  artefacts_coding_guidelines:
+  artifacts_coding_guidelines:
     description: 'Comma-separated list of URLs of coding guidelines documents'
     required: false
-  artefacts_release_process:
+  artifacts_release_process:
     description: 'Comma-separated list of URLs of release process information'
     required: false
 outputs:
   manifest_file:
-    description: 'Process artefacts manifest file name'
+    description: 'Process artifacts manifest file name'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.release_url }}
-    - ${{ inputs.artefacts_readme }}
-    - ${{ inputs.artefacts_requirements }}
-    - ${{ inputs.artefacts_testing }}
-    - ${{ inputs.artefacts_documentation }}
-    - ${{ inputs.artefacts_coding_guidelines }}
-    - ${{ inputs.artefacts_release_process }}
+    - ${{ inputs.artifacts_readme }}
+    - ${{ inputs.artifacts_requirements }}
+    - ${{ inputs.artifacts_testing }}
+    - ${{ inputs.artifacts_documentation }}
+    - ${{ inputs.artifacts_coding_guidelines }}
+    - ${{ inputs.artifacts_release_process }}

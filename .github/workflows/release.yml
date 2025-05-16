@@ -6,8 +6,8 @@ concurrency:
   group: "release-${{ github.head_ref || github.ref }}"
   cancel-in-progress: true
 jobs:
-  quality_artefacts_job:
-    name: A job to collect quality artefacts
+  quality_artifacts_job:
+    name: A job to collect quality artifacts
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -20,17 +20,17 @@ jobs:
         run: |
           echo ${{ steps.create_release.outputs.url }}
       # Call the quevee gh action to create the manifest file for SDV maturity assessment.
-      - name: Collect quality artefacts
+      - name: Collect quality artifacts
         uses: eclipse-dash/quevee
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
-          artefacts_readme: README.md
-          artefacts_requirements: docs/requirements.md
-          artefacts_testing: tests/test_report.md
-          artefacts_documentation: docs/getting_started/README.md
-          artefacts_coding_guidelines: docs/coding_guidelines.md
-          artefacts_release_process: https://example.org/docs/my_release_process.md
+          artifacts_readme: README.md
+          artifacts_requirements: docs/requirements.md
+          artifacts_testing: tests/test_report.md
+          artifacts_documentation: docs/getting_started/README.md
+          artifacts_coding_guidelines: docs/coding_guidelines.md
+          artifacts_release_process: https://example.org/docs/my_release_process.md
       - name: Upload quality manifest to release
         uses: svenstaro/upload-release-action@v2
         with:

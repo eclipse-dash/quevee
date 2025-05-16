@@ -90,26 +90,26 @@ for var in $(env | grep "^INPUT_" | cut -d= -f1); do
     value="${!var}"
 
     case "$var" in
-    "INPUT_ARTEFACTS_README")
+    "INPUT_ARTIFACTS_README")
         generate_toml_section "readme" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTEFACTS_REQUIREMENTS")
+    "INPUT_ARTIFACTS_REQUIREMENTS")
         generate_toml_section "requirements" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTEFACTS_TESTING")
+    "INPUT_ARTIFACTS_TESTING")
         generate_toml_section "testing" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTEFACTS_DOCUMENTATION")
+    "INPUT_ARTIFACTS_DOCUMENTATION")
         generate_toml_section "documentation" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTEFACTS_CODING_GUIDELINES")
+    "INPUT_ARTIFACTS_CODING_GUIDELINES")
         generate_toml_section "coding_guidelines" "$value" >>"$OUTPUT"
         ;;
-    "INPUT_ARTEFACTS_RELEASE_PROCESS")
+    "INPUT_ARTIFACTS_RELEASE_PROCESS")
         generate_toml_section "release_process" "$value" >>"$OUTPUT"
         ;;
     *)
-        echo "Unknown artefact type ${var#INPUT_ARTEFACTS_}"
+        echo "Unknown artifact type ${var#INPUT_ARTIFACTS_}"
         ;;
     esac
 done
