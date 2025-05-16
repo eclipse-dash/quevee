@@ -15,6 +15,9 @@ inputs:
   release_url:
     description: 'URL of the release this manifest refers to'
     required: false
+  artefacts_readme:
+    description: 'Comma-separated list of URLs of READMEs'
+    required: false
   artefacts_requirements:
     description: 'Comma-separated list of URLs of requirement files'
     required: false
@@ -38,6 +41,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.release_url }}
+    - ${{ inputs.artefacts_readme }}
     - ${{ inputs.artefacts_requirements }}
     - ${{ inputs.artefacts_testing }}
     - ${{ inputs.artefacts_documentation }}
