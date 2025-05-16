@@ -90,6 +90,9 @@ for var in $(env | grep "^INPUT_" | cut -d= -f1); do
     value="${!var}"
 
     case "$var" in
+    "INPUT_ARTEFACTS_README")
+        generate_toml_section "readme" "$value" >>"$OUTPUT"
+        ;;
     "INPUT_ARTEFACTS_REQUIREMENTS")
         generate_toml_section "requirements" "$value" >>"$OUTPUT"
         ;;

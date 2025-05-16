@@ -25,6 +25,7 @@ jobs:
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
+          artefacts_readme: README.md
           artefacts_requirements: docs/requirements.md
           artefacts_testing: tests/test_report.md
           artefacts_documentation: docs/getting_started/README.md
