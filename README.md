@@ -55,7 +55,7 @@ An example of a step archiving artefacts can be:
 This in turn can be referenced in the quevee call as:
 ```yaml
           ...
-          artifacts_testing: ${{ steps.upload_spec.outputs.browser_download_url }}
+          artefacts_testing: ${{ steps.upload_spec.outputs.browser_download_url }}
           ...
 ```
 
