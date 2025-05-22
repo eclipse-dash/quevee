@@ -11,7 +11,7 @@ To use this action, one simply needs to add the following steps in their release
 ```yaml
       # Call the quevee gh action to create the manifest file for SDV maturity assessment.
       - name: Collect quality artifacts
-        uses: eclipse-dash/quevee
+        uses: eclipse-dash/quevee@v1
         id: quevee
         with:
           release_url: ${{ steps.create_release.outputs.url }}
