@@ -37,6 +37,8 @@ If one needs to provide several files for a given criterion, there are two optio
 * provide a comma-separated list of files, as shown for the artifacts_testing example above, or
 * provide an archive, with a separate github action step.
 
+If the requested artefact is not available, e.g. if the requirements tracing is not ready yet, the entry can be left empty. 
+
 An example of a step archiving artifacts can be:
 ```yaml
       - name: Gather Testing documents
