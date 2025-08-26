@@ -3,6 +3,9 @@
 
 This action creates a `sdv-manifest.toml` file as a release asset, containing information required for the [SDV Maturity assessment](https://gitlab.eclipse.org/eclipse-wg/sdv-wg/sdv-technical-alignment/sdv-technical-topics/sdv-process/sdv-process-evaluation/-/blob/main/README.md) program. It takes as inputs a set of documents provided by the project, and formats it in a way that Eclipse SDV automation scripts can use to compute the level of maturity of the project according to the criteria defined in the program.
 
+## Criteria
+
+The various criteria, and the expected inputs to the GitHub action parameters, are defined and documented in the [SDV Process definition repository](https://gitlab.eclipse.org/eclipse-wg/sdv-wg/sdv-technical-alignment/sdv-technical-topics/sdv-process/sdv-process-definition/-/tree/main/SDV_Process?ref_type=heads).
 
 ## Usage
 
